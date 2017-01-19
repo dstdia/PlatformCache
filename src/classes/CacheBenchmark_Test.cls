@@ -70,18 +70,6 @@ private class CacheBenchmark_Test {
 
     }
 
-    @isTest
-    static void useImmutableAnnotation() {
-
-        Cache.org.put('Products', new List<String>{'Banana','Apple','Orange'});
-        Cache.org.put('Products', 'Shoe');
-
-        Cache.org.put('ProductsImmutable', new List<String>{'Banana','Apple','Orange'}, 3600, Cache.Visibility.ALL, true);
-        Cache.org.put('ProductsImmutable', 'Shoe');
-        SYstem.debug(Cache.org.get('ProductsImmutable'));
-        
-    }
-
     public class SlimProduct {
 
         public String Name;
