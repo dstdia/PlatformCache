@@ -8,10 +8,10 @@ Slides for my presetation: https://github.com/dstdia/TahoeDreamin17/blob/master/
 
 ## References
 
-Developer Documentation: bit.ly/cachedoc
-Trailhead: Platform Cache Basics bit.ly/cachetrail
-Keir Bowden’s blog post: bit.ly/cache-buzzard
-Josh Kaplan‘s blog post: bit.ly/cache-sfblog
+* Developer Documentation: https://bit.ly/cachedoc
+* Trailhead: Platform Cache Basics https://bit.ly/cachetrail
+* Keir Bowden’s blog post: https://bit.ly/cache-buzzard
+* Josh Kaplan‘s blog post: https://bit.ly/cache-sfblog
 
 ## Join in and come to Tahoe Dreamin
 
