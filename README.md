@@ -15,6 +15,6 @@ Slides for my presetation: https://github.com/dstdia/TahoeDreamin17/blob/master/
 
 ## Join in and come to Tahoe Dreamin
 
-Visit http://www.tahoedreamin.com
-Check twitter.com/tahoedreamin17 for the 2017 event and watch out for twitter.com/tahoedreamin18 to come up
-Follow tiwtter.com/bill_greenhaw
+* Visit http://www.tahoedreamin.com
+* Check https://twitter.com/tahoedreamin17 for the 2017 event and watch out for https://twitter.com/tahoedreamin18 to come up
+* Follow https://twitter.com/bill_greenhaw - the guy who makes Tahoe Dreamin' reality. Thanks, Bill!
