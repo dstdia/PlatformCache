@@ -1,4 +1,4 @@
-public with sharing class SampleCacheManager implements Schedulable {
+public class SampleCacheManager implements Schedulable {
 	
 	private static Map<String, SalesDistrict__c> salesDistricts;
 	private static SalesDistrict__c defaultDistrict;
@@ -12,7 +12,6 @@ public with sharing class SampleCacheManager implements Schedulable {
         
         // query a complete list from the database
         List<SalesDistrict__c>  lSalesDistricts = [
-
         	SELECT	Id, 
         			Name, 
         			Country__c,
@@ -31,11 +30,10 @@ public with sharing class SampleCacheManager implements Schedulable {
         	if (sd.isDefault__c == TRUE) {
 
         		defaultDistrict = sd;
-        		Cache.Org.put('DefaultSalesDistrict', sd);
+        		Cache.Org.put('local.SalesDistricts.DefaultSalesDistrict', sd);
         	}
         }
-
-        Cache.Org.put('SalesDistricts', salesDistricts);
+        Cache.Org.put('local.SalesDistricts.SalesDistricts', salesDistricts);
     }
 
     /**
@@ -43,44 +41,38 @@ public with sharing class SampleCacheManager implements Schedulable {
      */
     public static SalesDistrict__c getDistrict(String salesDistrictKey) {
         
-    	// first, try to retrieve the cached values 
+    	// first, try to retrieve the cached values and cast it into the expected type.
+    	// call will fail if nothing's there or can't be casted into the desired type
     	try {
-    	
-    		salesDistricts = (Map<String, SalesDistrict__c>) Cache.Org.get('SalesDistricts');
-    		defaultDistrict = (SalesDistrict__c) Cache.Org.get('DefaultSalesDistrict');
+    		salesDistricts = (Map<String, SalesDistrict__c>) Cache.Org.get('local.SalesDistricts.SalesDistricts');
+    		defaultDistrict = (SalesDistrict__c) Cache.Org.get('local.SalesDistricts.DefaultSalesDistrict');
     	}
     	
     	catch (Exception e) {
-
     		System.debug('Cache is not availbale. Falling back to database');
     	}
         
-
-        // if nothing is there, try to rebuild the map
+		// if the above failed or nothing is there, try to rebuild the map
         
-        if(salesDistricts == null) {
-            
+        if(salesDistricts == null) {            
             populateSalesDistricts();
         }
 
-        // try to resolve the sales district. If any miss happens, try to get the default, and 
+        // try to resolve the sales district. 
+        // If any miss happens, still, try to get the default, and 
         // if that fails, return NULL
         
         if (salesDistricts.containsKey(salesDistrictKey)) {
-
         	return salesDistricts.get(salesDistrictKey);
         }
         
         else if (defaultDistrict != NULL) {
-
         	return defaultDistrict;
         }
         
         else {
-
         	return NULL;	
         }
-   
     }
 
     /**

@@ -9,6 +9,10 @@ private class CacheBenchmark_Test {
     }
     
     
+    /**
+     * Create 9000 Product2 records that go into the database.
+     * 9000 is roughly the number that will still fit into a 100kB Cache items
+     */
     private static void populateWithObjects() {
 
         List<Product2> products = new List<Product2>();
@@ -22,7 +26,7 @@ private class CacheBenchmark_Test {
         }
 
         insert products;
-        Cache.Org.put('products', new Map<Id, Product2>(products));
+        Cache.Org.put('local.def.products', new Map<Id, Product2>(products));
 
     }
 
@@ -40,7 +44,7 @@ private class CacheBenchmark_Test {
             slimprods.put(sp.ProductCode, sp);
         }
         
-        Cache.Org.put('slimproducts', slimprods);
+        Cache.Org.put('local.def.slimproducts', slimprods);
     }
     
 
@@ -49,7 +53,7 @@ private class CacheBenchmark_Test {
         
         long startTime = System.currentTimeMillis();
 
-        Map<Id, Product2> products = (Map<Id, Product2>) Cache.org.get('products');	
+        Map<Id, Product2> products = (Map<Id, Product2>) Cache.org.get('local.def.products');	
 
         long endTime = System.currentTimeMillis();
 
