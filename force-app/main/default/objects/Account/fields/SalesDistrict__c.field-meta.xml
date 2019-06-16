@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SalesDistrict__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Sales district assigned to the account</description>
+    <externalId>false</externalId>
+    <label>Sales District</label>
+    <referenceTo>SalesDistrict__c</referenceTo>
+    <relationshipLabel>Accounts</relationshipLabel>
+    <relationshipName>Accounts</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>
