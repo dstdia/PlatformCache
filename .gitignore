@@ -1,0 +1,7 @@
+.idea
+*.iml
+IlluminatedCloud
+IlluminatedCloud/*
+.vscode
+.vim-force.com
+.sfdx

@@ -1,7 +1,7 @@
-@isTest
+@IsTest
 private class CacheBenchmark_Test {
 
-    @testSetup 
+    @TestSetup
     private static void setup() {
 
         populateWithObjects();
@@ -21,8 +21,8 @@ private class CacheBenchmark_Test {
           
             products.add(new Product2(
                 Name = 'Product ' + i,
-                isActive = true,
-                Productcode = 'P' + i));
+                IsActive = true,
+                ProductCode = 'P' + i));
         }
 
         insert products;
@@ -37,47 +37,50 @@ private class CacheBenchmark_Test {
         for (Integer i = 0 ; i < 12500 ; i++) {
           
             SlimProduct sp = new SlimProduct();
-            sp.Name = 'Product ' + i;
+            sp.name = 'Product ' + i;
             sp.isActive = true;
-            sp.ProductCode = 'P' + i;
+            sp.productCode = 'P' + i;
 
-            slimprods.put(sp.ProductCode, sp);
+            slimprods.put(sp.productCode, sp);
         }
         
         Cache.Org.put('local.def.slimproducts', slimprods);
     }
     
 
-    @istest
+    @IsTest
     static void retrieveTenKCacheValues() {
         
-        long startTime = System.currentTimeMillis();
+        Long startTime = System.currentTimeMillis();
 
-        Map<Id, Product2> products = (Map<Id, Product2>) Cache.org.get('local.def.products');	
+        Map<Id, Product2> products = (Map<Id, Product2>) Cache.Org.get('local.def.products');
 
-        long endTime = System.currentTimeMillis();
+        Long endTime = System.currentTimeMillis();
 
-        System.debug('Fetching products from Cache took ' + (endtime - starttime));
+        System.debug('Fetching ' + products.values().size() + ' products from Cache took ' + (endTime - startTime));
 
     }
 
-    @istest
+    @IsTest
     static void retrieveTenKDBValues() {
         
-        long startTime = System.currentTimeMillis();
+        Long startTime = System.currentTimeMillis();
 
-        Map<Id, Product2> products = new Map<Id, Product2>([SELECT id, Name, isActive, ProductCode FROM Product2]);
+        Map<Id, Product2> products = new Map<Id, Product2>([SELECT Id, Name, IsActive, ProductCode FROM Product2]);
 
-        long endTime = System.currentTimeMillis();
+        Long endTime = System.currentTimeMillis();
 
-        System.debug('Fetching products from Database took ' + (endtime - starttime));
+        System.debug('Fetching ' + products.values().size() + ' products from Database took ' + (endTime - startTime));
 
     }
 
+    /**
+     * @description Inner class for product handling
+     */
     public class SlimProduct {
 
-        public String Name;
+        public String name;
         public Boolean isActive;
-        public String ProductCode;
+        public String productCode;
     }
 }

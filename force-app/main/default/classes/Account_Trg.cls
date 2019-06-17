@@ -1,6 +1,8 @@
 /**
- * Trigger handler for Account_Trg trigger
- * - fills SalesDistruct__c lookup field and assigns record to the Sales Manager
+ * @author	Daniel Stange
+ * @date    2019-06-17
+ * @description Trigger handler for Account_Trg trigger
+ * 	- fills SalesDistruct__c lookup field and assigns record to the Sales Manager
  */
 public class Account_Trg extends TriggerHandler {
 	
@@ -21,7 +23,7 @@ public class Account_Trg extends TriggerHandler {
 	}
 
 	/**
-	 * Retrieve a matching sales district from the cache to fill SalesDistrict__C relation 
+	 * @description Retrieve a matching sales district from the cache to fill SalesDistrict__C relation
 	 * or use the default
 	 */
 	private void fillSalesDistrict() {
@@ -32,7 +34,7 @@ public class Account_Trg extends TriggerHandler {
 
 			SalesDistrict__c sd = SampleCacheManager.getDistrict(salesDistrictKey);
 
-			if (sd != NULL) {
+			if (sd != null) {
 
 				a.OwnerId = sd.SalesManager__c;
 				a.SalesDistrict__c = sd.Id;	

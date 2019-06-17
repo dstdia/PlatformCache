@@ -1,14 +1,20 @@
-public class SampleCacheManager implements Schedulable {
+/**
+ * @author Daniel Stange <daniel.stange@die-interaktiven.de>
+ * @date	2019-06-17
+ * @description Service Class to maintain the Platform Cache
+ *
+ */
+public with sharing class SampleCacheManager implements Schedulable {
 	
 	private static Map<String, SalesDistrict__c> salesDistricts;
 	private static SalesDistrict__c defaultDistrict;
 
 	/**
-	 * build a map of Salesdistrict__c by SalesDistrictKey__c and puts it into the cache
+	 * @description  build a map of Salesdistrict__c by SalesDistrictKey__c and puts it into the cache
 	 */
 	public static void populateSalesDistricts() {
 
-		salesDistricts = new Map<String, Salesdistrict__c>();
+		salesDistricts = new Map<String, SalesDistrict__c>();
         
         // query a complete list from the database
         List<SalesDistrict__c>  lSalesDistricts = [
@@ -27,7 +33,7 @@ public class SampleCacheManager implements Schedulable {
 
         	salesDistricts.put(sd.SalesDistrictKey__c, sd);
 
-        	if (sd.isDefault__c == TRUE) {
+        	if (sd.isDefault__c == true) {
 
         		defaultDistrict = sd;
         		Cache.Org.put('local.SalesDistricts.DefaultSalesDistrict', sd);
@@ -37,7 +43,8 @@ public class SampleCacheManager implements Schedulable {
     }
 
     /**
-     * Wrapper for the get-Method of the platform cache
+     * @description  Wrapper for the get-Method of the platform cache
+     * @return The matching Sales District record
      */
     public static SalesDistrict__c getDistrict(String salesDistrictKey) {
         
@@ -66,18 +73,18 @@ public class SampleCacheManager implements Schedulable {
         	return salesDistricts.get(salesDistrictKey);
         }
         
-        else if (defaultDistrict != NULL) {
+        else if (defaultDistrict != null) {
         	return defaultDistrict;
         }
         
         else {
-        	return NULL;	
+        	return null;
         }
     }
 
     /**
-     * Schedule a refresh of your cache for any period shorter than the standard time to live of 24 hrs
-     *
+     * @description  Schedule a refresh of your cache for any period shorter than the standard time to live of 24 hrs
+     * @param The context from System.Schedulable Context
      */
     public void execute(SchedulableContext sc) {
 
