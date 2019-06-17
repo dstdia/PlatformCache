@@ -6,19 +6,15 @@
  */
 public class Account_Trg extends TriggerHandler {
 	
-
 	public override void beforeInsert() {
-
 		this.fillSalesDistrict();
 	}
 
 	public override void beforeUpdate() {
-
 		this.fillSalesDistrict();
 	}
 
 	public override void afterUndelete() {
-
 		this.fillSalesDistrict();
 	}
 
@@ -31,7 +27,6 @@ public class Account_Trg extends TriggerHandler {
 		for (Account a : (List<Account>) Trigger.new) {
 
 			String salesDistrictKey = a.BillingCountryCode + a.BillingPostalCode.left(2);
-
 			SalesDistrict__c sd = SampleCacheManager.getDistrict(salesDistrictKey);
 
 			if (sd != null) {
