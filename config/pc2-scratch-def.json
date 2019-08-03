@@ -1,0 +1,16 @@
+{
+  "orgName": "cache",
+  "country": "DE",
+  "edition": "Enterprise",
+  "language": "en",
+  "features": [
+    "API",
+    "AuthorApex",
+    "DebugApex",
+    "StateAndCountryPicklist"
+  ],
+  "orgPreferences": {
+    "enabled": [],
+    "disabled": []
+  }
+}

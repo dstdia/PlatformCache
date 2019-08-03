@@ -4,13 +4,13 @@
  * @description Service Class to maintain the Platform Cache
  *
  */
-public with sharing class SampleCacheManager implements Schedulable {
+public with sharing class Cache_SalesDistrictCustom implements Schedulable {
 	
 	private static Map<String, SalesDistrict__c> salesDistricts;
 	private static SalesDistrict__c defaultDistrict;
 
 	/**
-	 * @description  build a map of Salesdistrict__c by SalesDistrictKey__c and puts it into the cache
+	 * @description  build a map of SalesDistrict__c by SalesDistrictKey__c and puts it into the cache
 	 */
 	public static void populateSalesDistricts() {
 
@@ -44,7 +44,10 @@ public with sharing class SampleCacheManager implements Schedulable {
 
     /**
      * @description  Wrapper for the get-Method of the platform cache
+     *
+     * @param  salesDistrictKey A Sales District Key (Country ISO Code + two digit PostalCode key)
      * @return The matching Sales District record
+     *
      */
     public static SalesDistrict__c getDistrict(String salesDistrictKey) {
         
@@ -56,7 +59,7 @@ public with sharing class SampleCacheManager implements Schedulable {
     	}
     	
     	catch (Exception e) {
-    		System.debug('Cache is not availbale. Falling back to database');
+			System.debug('Cache is not available. Falling back to database');
     	}
         
 		// if the above failed or nothing is there, try to rebuild the map
@@ -84,7 +87,7 @@ public with sharing class SampleCacheManager implements Schedulable {
 
     /**
      * @description  Schedule a refresh of your cache for any period shorter than the standard time to live of 24 hrs
-     * @param The context from System.Schedulable Context
+     * @param sc The context from System.Schedulable Context
      */
     public void execute(SchedulableContext sc) {
 

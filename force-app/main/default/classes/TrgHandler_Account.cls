@@ -1,10 +1,10 @@
 /**
  * @author	Daniel Stange
  * @date    2019-06-17
- * @description Trigger handler for Account_Trg trigger
+ * @description Trigger handler for TrgHandler_Account trigger
  * 	- fills SalesDistruct__c lookup field and assigns record to the Sales Manager
  */
-public class Account_Trg extends TriggerHandler {
+public class TrgHandler_Account extends TriggerHandler {
 	
 	public override void beforeInsert() {
 		this.fillSalesDistrict();
@@ -27,8 +27,8 @@ public class Account_Trg extends TriggerHandler {
 		for (Account a : (List<Account>) Trigger.new) {
 
 			String salesDistrictKey = a.BillingCountryCode + a.BillingPostalCode.left(2);
-			SalesDistrict__c sd = SampleCacheManager.getDistrict(salesDistrictKey);
-
+			SalesDistrict__c sd = Cache_SalesDistrictCustom.getDistrict(salesDistrictKey);
+			// Cache.Org.get(Cache_SalesDistrict.class, salesDistrictKey);
 			if (sd != null) {
 
 				a.OwnerId = sd.SalesManager__c;

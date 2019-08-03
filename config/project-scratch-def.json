@@ -1,0 +1,13 @@
+{
+  "orgName": "PlatformCache",
+  "edition": "Enterprise",
+  "language": "en",
+  "features": [
+    "StateAndCountryPicklist"
+  ],
+  "settings": {
+    "orgPreferenceSettings": {
+      "s1DesktopEnabled": true
+    }
+  }
+}

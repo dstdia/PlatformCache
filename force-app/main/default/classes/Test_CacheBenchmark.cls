@@ -1,5 +1,5 @@
 @IsTest
-private class CacheBenchmark_Test {
+private class Test_CacheBenchmark {
 
     @TestSetup
     private static void setup() {
@@ -26,7 +26,7 @@ private class CacheBenchmark_Test {
         }
 
         insert products;
-        Cache.Org.put('local.def.products', new Map<Id, Product2>(products));
+        Cache.Org.put('local.Products.productsTest', new Map<Id, Product2>(products));
 
     }
 
@@ -43,17 +43,30 @@ private class CacheBenchmark_Test {
 
             slimprods.put(sp.productCode, sp);
         }
-        
-        Cache.Org.put('local.def.slimproducts', slimprods);
+
+        Cache.Org.put('local.Products.slimProductsTest', slimprods);
     }
     
 
     @IsTest
-    static void retrieveTenKCacheValues() {
-        
+    static void retrieveTenKCacheSObjects() {
+
         Long startTime = System.currentTimeMillis();
 
-        Map<Id, Product2> products = (Map<Id, Product2>) Cache.Org.get('local.def.products');
+        Map<Id, Product2> products = (Map<Id, Product2>) Cache.Org.get('local.Products.productsTest');
+
+        Long endTime = System.currentTimeMillis();
+
+        System.debug('Fetching ' + products.values().size() + ' products from Cache took ' + (endTime - startTime));
+
+    }
+
+    @IsTest
+    static void retrieveTenKCacheApexObjects() {
+
+        Long startTime = System.currentTimeMillis();
+
+        Map<Id, Product2> products = (Map<Id, Product2>) Cache.Org.get('local.Products.productsTest');
 
         Long endTime = System.currentTimeMillis();
 
