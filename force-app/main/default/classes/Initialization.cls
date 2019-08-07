@@ -1,0 +1,42 @@
+public class Initialization {
+    
+    private static List<User> users;
+    
+    public static void CacheUser() {
+        User u = [SELECT Id, CountryCode, UserPreferencesCacheDiagnostics FROM User WHERE Id =: UserInfo.getUserId()];
+        u.CountryCode = 'DE';
+        u.UserPreferencesCacheDiagnostics = true;
+        update u;
+    }
+    
+    public static void SalesDistricts() {
+        
+        users = [SELECT Id FROM User WHERE FederationIdentifier LIKE 'U%'];
+        List<SalesDistrict__c> newSalesDistricts = new List<SalesDistrict__c>();
+        
+        for (Integer i = 10; i < 100; i++) {
+            
+            newSalesDistricts.add(
+            	new SalesDistrict__c(
+                	Name = 'SalesDistrict DE' +i,
+                    Country__c = 'Germany',
+                    CountryIsoCode__c = 'DE',
+                    isDefault__C = false,
+                    SalesManager__c = getRandomUserId(),
+                    ServiceManager__c = getRandomUserId(),
+                    OwnerId = getRandomUserId(),
+                    SalesDistrictKey__c = 'DE' + i
+                )
+            );
+        }
+        
+        upsert newSalesDistricts SalesDistrictKey__c;
+    }
+
+    private static Id getRandomUserId(){
+        
+        Integer max = users.size();
+        Integer randomIndex = Integer.valueOf(Math.floor(max * Math.random()));
+        return users[randomIndex].Id;
+    }
+}

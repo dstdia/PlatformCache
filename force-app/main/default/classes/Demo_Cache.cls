@@ -7,6 +7,7 @@ public without sharing class Demo_Cache {
 
     private static Map<String, Id> cachedProductKeys;
     private static Boolean wasInitialized;
+    private static List<Product2> lProducts;
 
     static {
         cachedProductKeys = (Map<String, Id>) Cache.Org.get('local.Products.productMap');
@@ -25,10 +26,19 @@ public without sharing class Demo_Cache {
         if (cachedProductKeys == null) {
             initCache(null);
             cachedProductKeys = (Map<String, Id>) Cache.Org.get('local.Products.productMap');
+
+            // for all cases that can't be handled this way, give up...
+            if (cachedProductKeys == null) {
+                return null;
+            }
         }
 
-        if (cachedProductKeys.containsKey(byKey)) {
-            return cachedProductKeys.get(byKey);
+        if (cachedProductKeys.containsKey(byKey) && byKey != null) {
+            try {
+                return cachedProductKeys.get(byKey);
+            } catch (Exception e) {
+                return null;
+            }
         } else {
             return null;
         }
@@ -105,11 +115,14 @@ public without sharing class Demo_Cache {
      */
     private static void initCache(String cacheType) {
 
-        List<Product2> p = [SELECT Id, ExtId__c FROM Product2];
+        if (lProducts == null) {
+            lProducts = [SELECT Id, ExtId__c FROM Product2];
+        }
+
 
         Map<String, Id> productKeyToId = new Map<String, Id>();
 
-        for (Product2 pr : p) {
+        for (Product2 pr : lProducts) {
 
             if (cacheType == 'Item') {
                 Cache.Org.put('local.Products.' + pr.ExtId__c, pr.Id);

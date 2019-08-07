@@ -17,12 +17,14 @@ private class Test_CacheBenchmark {
 
         List<Product2> products = new List<Product2>();
         
-        for (Integer i = 0 ; i < 9000 ; i++) {
+        for (Integer i = 0 ; i < 7500 ; i++) {
           
             products.add(new Product2(
+                isActive = true,
                 Name = 'Product ' + i,
-                IsActive = true,
-                ProductCode = 'P' + i));
+                ProductCode = 'P' + i,
+                ExtId__c = String.valueOf(i))
+            );
         }
 
         insert products;
@@ -62,7 +64,7 @@ private class Test_CacheBenchmark {
     }
 
     @IsTest
-    static void retrieveTenKCacheApexObjects() {
+    static void retrieveBulkCacheApexObjects() {
 
         Long startTime = System.currentTimeMillis();
 
@@ -75,7 +77,7 @@ private class Test_CacheBenchmark {
     }
 
     @IsTest
-    static void retrieveTenKDBValues() {
+    static void retrieveBulkDBValues() {
         
         Long startTime = System.currentTimeMillis();
 
@@ -95,5 +97,40 @@ private class Test_CacheBenchmark {
         public String name;
         public Boolean isActive;
         public String productCode;
+    }
+
+    @IsTest
+    static void runDemoCaseItem() {
+        Test.startTest();
+        Demo_CacheTestcases.retrieveCachedFromMemory('item');
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void runDemoCaseDb() {
+        Test.startTest();
+        Demo_CacheTestcases.retrieveCachedFromMemory('db');
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void runDemoCaseMap() {
+        Test.startTest();
+        Demo_CacheTestcases.retrieveCachedFromMemory('map');
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void runDemoCaseDbSingle() {
+        Test.startTest();
+        Demo_CacheTestcases.retrieveCachedFromMemory('dbsingle');
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void runDemoCaseDbInterface() {
+        Test.startTest();
+        Demo_CacheTestcases.retrieveCachedFromMemory('interface');
+        Test.stopTest();
     }
 }
